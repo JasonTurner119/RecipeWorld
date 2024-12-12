@@ -9,9 +9,19 @@ import Foundation
 
 struct RecipeRetriever {
 	
-	static let shared = RecipeRetriever()
+	static let shared = RecipeRetriever(
+		url: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json")!
+	)
 	
-	private init() {}
+	static let malformed = RecipeRetriever(
+		url: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-malformed.json")!
+	)
+	
+	static let empty = RecipeRetriever(
+		url: URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes-empty.json")!
+	)
+	
+	private let url: URL
 	
 	private let decoder: JSONDecoder = {
 		let decoder = JSONDecoder()
@@ -20,7 +30,6 @@ struct RecipeRetriever {
 	}()
 	
 	func retrieveRecipes() async throws -> [Recipe] {
-		let url = URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/recipes.json")!
 		let (data, _) = try await URLSession.shared.data(from: url)
 		let recipeList = try decoder.decode(RecipeList.self, from: data)
 		return recipeList.recipes
