@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct RecipeWorldApp: App {
-    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+			RecipeListView(recipes: Array(repeating: .example, count: 10))
         }
     }
+	
 }
