@@ -12,7 +12,7 @@ struct RecipeWorldApp: App {
 
     var body: some Scene {
         WindowGroup {
-			RecipeListView(recipes: Array(repeating: .example, count: 10))
+			RecipeListView()
         }
     }
 	

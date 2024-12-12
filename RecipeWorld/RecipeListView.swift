@@ -9,25 +9,37 @@ import SwiftUI
 
 struct RecipeListView: View {
 	
-	let recipes: [Recipe]
+	@State private var state: RecipeListViewState = .loading
 	
     var body: some View {
 		NavigationView {
 			List {
-				if recipes.isEmpty {
-					Text("No Recipes Found.")
-				} else {
-					ForEach(recipes.indices, id: \.self) { index in
-						RecipeListView.recipeRow(recipe: recipes[index])
+				switch state {
+				case .loading:
+					Text("Loading...")
+				case .error:
+					Text("Error Loading Recipes")
+				case .loaded(let recipes):
+					ForEach(recipes) { recipe in
+						recipeRow(recipe: recipe)
 					}
 				}
 			}
 			.navigationTitle("Recipes")
 		}
+		.task {
+			do {
+				let recipies = try await RecipeRetriever.shared.retrieveRecipes()
+				state = .loaded(recipies)
+			} catch {
+				print(String(describing: error))
+				state = .error
+			}
+		}
     }
 	
 	@ViewBuilder
-	private static func recipeRow(recipe: Recipe) -> some View {
+	private func recipeRow(recipe: Recipe) -> some View {
 		NavigationLink(destination: { RecipeDetailView(recipe: recipe) }) {
 			RecipeThumbnailView(recipe: recipe)
 		}
@@ -35,6 +47,14 @@ struct RecipeListView: View {
 	
 }
 
+extension RecipeListView {
+	private enum RecipeListViewState {
+		case loading
+		case error
+		case loaded([Recipe])
+	}
+}
+
 #Preview {
-	RecipeListView(recipes: Array(repeating: .example, count: 4))
+	RecipeListView()
 }
