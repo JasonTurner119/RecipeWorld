@@ -14,16 +14,24 @@ struct RecipeListView: View {
     var body: some View {
 		NavigationView {
 			List {
-				ForEach(recipes.indices, id: \.self) { index in
-					let recipe = recipes[index]
-					NavigationLink(destination: { RecipeView(recipe: recipe) }) {
-						Text(recipe.name)
+				if recipes.isEmpty {
+					Text("No Recipes Found.")
+				} else {
+					ForEach(recipes.indices, id: \.self) { index in
+						RecipeListView.recipeRow(recipe: recipes[index])
 					}
 				}
 			}
 			.navigationTitle("Recipes")
 		}
     }
+	
+	@ViewBuilder
+	private static func recipeRow(recipe: Recipe) -> some View {
+		NavigationLink(destination: { RecipeDetailView(recipe: recipe) }) {
+			RecipeThumbnailView(recipe: recipe)
+		}
+	}
 	
 }
 

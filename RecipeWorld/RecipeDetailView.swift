@@ -1,5 +1,5 @@
 //
-//  RecipeView.swift
+//  RecipeDetailView.swift
 //  RecipeWorld
 //
 //  Created by Jason Turner on 12/12/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipeView: View {
+struct RecipeDetailView: View {
 	
 	let recipe: Recipe
 	
@@ -31,6 +31,6 @@ struct RecipeView: View {
 
 #Preview {
 	NavigationView {
-		RecipeView(recipe: .example)
+		RecipeDetailView(recipe: .example)
 	}
 }
