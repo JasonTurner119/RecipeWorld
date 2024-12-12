@@ -16,6 +16,7 @@ struct RecipeDetailView: View {
 		ScrollView {
 			VStack(alignment: .leading) {
 				Text(recipe.cuisine)
+				RecipeLinkView(recipe: recipe)
 				if recipe.hasPhoto {
 					RecipePhotoView(recipe: recipe)
 				}

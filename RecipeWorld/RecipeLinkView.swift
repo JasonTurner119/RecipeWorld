@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct RecipeLinkView: View {
+	
+	let recipe: Recipe
+	
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+		
+		if let url = recipe.sourceUrl {
+			
+			Link(destination: url) {
+				HStack {
+					Spacer()
+					HStack {
+						Image(systemName: "link")
+						Text("Visit the Source")
+					}
+					.padding()
+					Spacer()
+				}
+				.foregroundStyle(.black)
+				.background(Color.accentColor)
+				.cornerRadius(15)
+			}
+			
+		}
+		
     }
+	
 }
 
 #Preview {
-    RecipeLinkView()
+	RecipeLinkView(recipe: .example)
 }
