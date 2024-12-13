@@ -15,7 +15,7 @@ struct RecipePhotoView: View {
 		
 		let url = recipe.photoUrlLarge ?? recipe.photoUrlSmall
 		
-		AsyncImage(url: url) { image in
+		CachingAsyncImage(url: url!) { image in
 			image
 				.resizable()
 				.aspectRatio(contentMode: .fit)

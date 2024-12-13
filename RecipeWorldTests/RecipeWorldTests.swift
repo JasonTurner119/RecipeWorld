@@ -11,7 +11,7 @@ import Foundation
 
 struct RecipeWorldTests {
 
-    @Test func recipeDecodingFull() async throws {
+    @Test func recipeDecodingFull() throws {
 		let decoder = JSONDecoder()
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
 		let json = #"""
@@ -36,7 +36,7 @@ struct RecipeWorldTests {
 		#expect(recipe.youtubeUrl?.absoluteString == "https://www.youtube.com/watch?v=some.id")
     }
 	
-	@Test func recipeDecodingMinimal() async throws {
+	@Test func recipeDecodingMinimal() throws {
 		let decoder = JSONDecoder()
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
 		let json = #"""
@@ -55,6 +55,15 @@ struct RecipeWorldTests {
 		#expect(recipe.uuid.uuidString == "eed6005f-f8c8-451f-98d0-4088e2b40eb6".uppercased())
 		#expect(recipe.sourceUrl == nil)
 		#expect(recipe.youtubeUrl == nil)
+	}
+	
+	@Test func imageLoader() async throws {
+		let url = URL(string: "https://d3jbb8n5wk0qxi.cloudfront.net/photos/b9ab0071-b281-4bee-b361-ec340d405320/large.jpg")!
+		let imageLoader = ImageLoader(url: url)
+		await imageLoader.load()
+		#expect(imageLoader.usedCache != nil)
+		await imageLoader.load()
+		#expect(imageLoader.usedCache == true)
 	}
 
 }
