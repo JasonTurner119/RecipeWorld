@@ -65,5 +65,25 @@ struct RecipeWorldTests {
 		await imageLoader.load()
 		#expect(imageLoader.usedCache == true)
 	}
+	
+	@Test func successfulRecipeRetriver() async throws {
+		let recipies = try await RecipeRetriever.shared.retrieveRecipes()
+		#expect(recipies.count > 0)
+	}
+	
+	@Test func malformedRecipeRetriver() async throws {
+		await #expect(
+			performing: {
+				try await RecipeRetriever.malformed.retrieveRecipes()
+			}, throws: { _ in
+				true
+			}
+		)
+	}
+	
+	@Test func emptyRecipeRetriver() async throws {
+		let recipies = try await RecipeRetriever.empty.retrieveRecipes()
+		#expect(recipies.count == 0)
+	}
 
 }
