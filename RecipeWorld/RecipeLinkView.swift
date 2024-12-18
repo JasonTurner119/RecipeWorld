@@ -9,24 +9,27 @@ import SwiftUI
 
 struct RecipeLinkView: View {
 	
-	let recipe: Recipe
+	var url: URL?
+	var text: String
+	var image: Image?
+	var backgroundColor: Color?
 	
     var body: some View {
 		
-		if let url = recipe.sourceUrl {
+		if let url {
 			
 			Link(destination: url) {
 				HStack {
 					Spacer()
 					HStack {
-						Image(systemName: "link")
-						Text("Visit the Source")
+						if let image { image }
+						Text(text)
 					}
 					.padding()
 					Spacer()
 				}
 				.foregroundStyle(.black)
-				.background(Color.accentColor)
+				.background(backgroundColor ?? .accentColor)
 				.cornerRadius(15)
 			}
 			
@@ -37,5 +40,9 @@ struct RecipeLinkView: View {
 }
 
 #Preview {
-	RecipeLinkView(recipe: .example)
+	RecipeLinkView(
+		url: URL(string: "www.google.com"),
+		text: "Google",
+		image: Image(systemName: "link")
+	)
 }

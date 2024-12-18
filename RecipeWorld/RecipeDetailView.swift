@@ -16,10 +16,11 @@ struct RecipeDetailView: View {
 		ScrollView {
 			VStack(alignment: .leading) {
 				Text(recipe.cuisine)
-				RecipeLinkView(recipe: recipe)
+				sourceLink
 				if recipe.hasPhoto {
 					RecipePhotoView(recipe: recipe)
 				}
+				youtubeLink
 			}
 			.padding(.horizontal)
 		}
@@ -27,6 +28,26 @@ struct RecipeDetailView: View {
 		.navigationBarTitleDisplayMode(.large)
 		
     }
+	
+	@ViewBuilder
+	private var sourceLink: some View {
+		RecipeLinkView(
+			url: recipe.sourceUrl,
+			text: "Visit Source",
+			image: Image(systemName: "link"),
+			backgroundColor: .blue.opacity(0.5)
+		)
+	}
+	
+	@ViewBuilder
+	private var youtubeLink: some View {
+		RecipeLinkView(
+			url: recipe.youtubeUrl,
+			text: "Watch the Video",
+			image: Image(systemName: "video"),
+			backgroundColor: .red.opacity(0.5)
+		)
+	}
 	
 }
 

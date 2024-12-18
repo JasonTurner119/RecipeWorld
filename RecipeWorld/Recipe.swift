@@ -37,6 +37,7 @@ extension Recipe {
 			"photo_url_large": "https://www.thereciperebel.com/wp-content/uploads/2020/07/best-burgers-www.thereciperebel.com-1200-13-of-18.jpg",
 			"uuid": "eed6005f-f8c8-451f-98d0-4088e2b40eb6",
 			"source_url": "https://www.allrecipes.com",
+			"youtube_url": "https://www.allrecipes.com",
 		}
 		"""#
 		let data = json.data(using: .utf8)!
