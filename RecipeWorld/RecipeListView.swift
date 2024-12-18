@@ -20,8 +20,12 @@ struct RecipeListView: View {
 				case .error:
 					Text("Error Loading Recipes")
 				case .loaded(let recipes):
-					ForEach(recipes) { recipe in
-						recipeRow(recipe: recipe)
+					if recipes.isEmpty {
+						Text("No Recipes Found")
+					} else {
+						ForEach(recipes) { recipe in
+							recipeRow(recipe: recipe)
+						}
 					}
 				}
 			}
