@@ -13,15 +13,17 @@ struct RecipePhotoView: View {
 	
     var body: some View {
 		
-		let url = recipe.photoUrlLarge ?? recipe.photoUrlSmall
-		
-		CachingAsyncImage(url: url!) { image in
-			image
-				.resizable()
-				.aspectRatio(contentMode: .fit)
-				.cornerRadius(20)
-		} placeholder: {
-			Text("Loading Image...")
+		if let url = recipe.photoUrlLarge {
+			CachingAsyncImage(url: url) { image in
+				image
+					.resizable()
+					.aspectRatio(contentMode: .fit)
+					.cornerRadius(20)
+			} placeholder: {
+				Text("Loading Image...")
+			} error: {
+				EmptyView()
+			}
 		}
 		
     }
