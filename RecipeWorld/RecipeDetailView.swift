@@ -17,9 +17,7 @@ struct RecipeDetailView: View {
 			VStack(alignment: .leading) {
 				Text(recipe.cuisine)
 				sourceLink
-				if recipe.hasPhoto {
-					RecipePhotoView(recipe: recipe)
-				}
+				largePhoto
 				youtubeLink
 			}
 			.padding(.horizontal)
@@ -37,6 +35,22 @@ struct RecipeDetailView: View {
 			image: Image(systemName: "link"),
 			backgroundColor: .blue.opacity(0.5)
 		)
+	}
+	
+	@ViewBuilder
+	private var largePhoto: some View {
+		if let url = recipe.photoUrlLarge {
+			CachingAsyncImage(url: url) { image in
+				image
+					.resizable()
+					.aspectRatio(contentMode: .fit)
+					.cornerRadius(20)
+			} placeholder: {
+				Text("Loading Image...")
+			} error: {
+				EmptyView()
+			}
+		}
 	}
 	
 	@ViewBuilder
